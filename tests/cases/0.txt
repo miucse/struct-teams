@@ -1,0 +1,22 @@
+3
+
+Brutal Bytes
+Manarat International University
+6
+Shamim Ahmed
+Jakariya Abbas
+Ahmad Hasan Mubashshir
+
+Printf("hello");
+Manarat International University
+8
+Mostakim Sakib
+Irfan Khan
+Saidur Rahman
+
+team X
+Manarat International University
+5
+Muhammad hasnat
+Raihan Chowdhury
+Sakib Al-Hashem

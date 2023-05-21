@@ -1,0 +1,6 @@
+Team name  : Brutal Bytes
+Institution: Manarat International University
+Solved     : 9
+   Member 1: Shamim Ahmed
+   Member 2: Jakariya Abbas
+   Member 3: Ahmad Hasan Mubashshir

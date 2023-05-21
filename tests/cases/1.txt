@@ -1,0 +1,36 @@
+5
+
+Brutal Bytes
+Manarat International University
+9
+Shamim Ahmed
+Jakariya Abbas
+Ahmad Hasan Mubashshir
+
+Printf("hello");
+Manarat International University
+8
+Mostakim Sakib
+Irfan Khan
+Saidur Rahman
+
+team X
+Manarat International University
+5
+Muhammad hasnat
+Raihan Chowdhury
+Sakib Al-Hashem
+
+Stack Smashers
+North South University
+7
+Raihan Chowdhury Abir
+Shafin Raiyan
+Nufayer Mahmud
+
+Segfault Solvers
+BRAC University
+6
+Ashfaqul Awal Himel
+Zuhayer Mashrur Chowdhury
+Suhail Mujtabir Fuad
