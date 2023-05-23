@@ -3,6 +3,7 @@
 #include <stdlib.h>
 
 #include "teams.h"
+
 #define getline(x, y) \
 	while(((x)[strcspn((x), "\r\n")] = 0) == 0 && strncmp((x), "", (y)) == 0) \
 		fgets((x), (y), stdin)
