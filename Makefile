@@ -47,7 +47,7 @@ endif
 
 all: obj/$(BINARY)
 obj/$(BINARY): $(<<objects>>)
-	$(<<) "LINK\t" $(^:obj/%=%)
+	$(<<) "  LD\t"-o $(@) $(LDFLAGS)"\t"$(^:obj/%=%)
 	@$(CC) $(^) -o $(@) $(LDFLAGS)
 
 clean: clean-objs clean-tests
@@ -62,7 +62,7 @@ clean-objs:
 test: $(<<results>>)
 
 obj/%.o: src/%.c
-	$(<<) "  CC\t" $(<:src/%=%)
+	$(<<) "  CC\t"$(CFLAGS)"\t"$(<:src/%=%)
 	@mkdir -p $(shell dirname $(@))
 	@$(CC) -c $(<) -o $(@) $(CFLAGS)
 

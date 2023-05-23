@@ -16,62 +16,68 @@ TEAM team_new()
 {
 	return (TEAM_impl *)malloc(sizeof(TEAM_impl));
 }
-void team_del(TEAM team)
+void team_del(TEAM self)
 {
-	if(team) free(team);
+	if(self) free(self);
 }
 
 // Setter definitions
 // @set char[]: TEAM.name -> bool
-SETTER(char*, name)
+SETTER(team, name,			TEAM, char *)
 {
-	return !(strncpy(team->name, name, 255) == NULL);
+	return !(strncpy(self->name, value, 255) == NULL);
 }
+
 // @set char[]: TEAM.institution -> bool
-SETTER(char*, institution)
+SETTER(team, institution,	TEAM, char *)
 {
-	return !(strncpy(team->institution, institution, 255) == NULL);
+	return !(strncpy(self->institution, value, 255) == NULL);
 }
+
 // @set char[]: TEAM.member_name, int: id -> bool
-SETTER(char*, member_name, int id)
+SETTER(team, member_name,	TEAM, char *, int id)
 {
-	return (id > 0 && id < 4 && !(strncpy(team->members[id-1], member_name, 255) == NULL));
+	return (id > 0 && id < 4 && !(strncpy(self->members[id-1], value, 255) == NULL));
 }
 // @set int: TEAM.solved -> bool
-SETTER(uint8_t, solved)
+SETTER(team, solved,		TEAM, uint8_t)
 {
-	if (solved <= 10)
-		team->solved = solved;
-	return (solved <= 10);
+	if (value <= 10)
+		self->solved = value;
+	return (value <= 10);
 }
 
 // Getter definitions
 // @get TEAM.name -> char[]
-GETTER(char*, name)
+GETTER(team, name,			TEAM, char *)
 {
-	return team->name;
-}
-// @get TEAM.institution -> char[]
-GETTER(char*, institution)
-{
-	return team->institution;
-}
-// @get TEAM.solved -> int
-GETTER(uint8_t, solved)
-{
-	return team->solved;
-}
-// @get TEAM.member_name, id -> char[]
-GETTER(char*, member_name, int id)
-{
-	return (id > 0 && id < 4)? team->members[id - 1] : "(incorrect id)";
+	return self->name;
 }
 
-int team_printf(TEAM team)
+// @get TEAM.institution -> char[]
+GETTER(team, institution,	TEAM, char *)
 {
-	return team_fprintf(stdout, team);
+	return self->institution;
 }
-int team_fprintf(FILE *file, TEAM team)
+
+// @get TEAM.solved -> int
+GETTER(team, solved,		TEAM, uint8_t)
+{
+	return self->solved;
+}
+
+// @get TEAM.member_name, id -> char[]
+GETTER(team, member_name,	TEAM, char *, int id)
+{
+	return (id > 0 && id < 4)? self->members[id - 1] : "(incorrect id)";
+}
+
+DEFINE(team, printf, TEAM, int)
+{
+	return fun(team, fprintf, self, stdout);
+}
+
+DEFINE(team, fprintf, TEAM, int, FILE *file)
 {
 	return fprintf(file,
 	               "Team name  : %s\n"
@@ -80,12 +86,18 @@ int team_fprintf(FILE *file, TEAM team)
 	               "   Member 1: %s\n"
 	               "   Member 2: %s\n"
 	               "   Member 3: %s\n",
-	               team->name, team->institution, team->solved,
-	               team->members[0], team->members[1], team->members[2]);
+	               self->name,
+	               self->institution,
+	               self->solved,
+	               self->members[0],
+	               self->members[1],
+	               self->members[2]);
 }
 
-TEAM team_find_champion(TEAM teams[], unsigned num)
+DEFINE(team, find_champion, TEAM, TEAM, TEAM *teams, unsigned num)
 {
+	UNUSED(self);
+
 	TEAM champion = teams[num - 1];
 	while(num --)
 		if ( teams[num]->solved > champion->solved )

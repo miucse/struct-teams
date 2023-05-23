@@ -24,25 +24,25 @@ int main()
 	}
 
 	for(i = 0; i < num; i++) {
-		teams[i] = team_new();
+		teams[i] = new(team);
 		unsigned idx = 0, s = 0;
 		while (idx ++ < 6) {
 			getline(line, 255);
 			switch(idx) {
 			case 1:
-				team_set(teams[i], name, line);
+				set(team, teams[i], name, line);
 				break;
 			case 2:
-				team_set(teams[i], institution, line);
+				set(team, teams[i], institution, line);
 				break;
 			case 3:
 				sscanf(line, "%u", &s);
-				team_set(teams[i], solved, s);
+				set(team, teams[i], solved, s);
 				break;
 			case 4: // falls through
 			case 5: // falls through
 			case 6:
-				team_set(teams[i], member_name, idx - 3, line);
+				set(team, teams[i], member_name, idx - 3, line);
 				break;
 			default:
 				break;
@@ -50,6 +50,7 @@ int main()
 			strncpy(line, "", 255);
 		}
 	}
-	team_printf(team_find_champion(teams, num));
+
+	fun(team, printf, fun(team, find_champion, NULL, teams, num));
 	return 0;
 }

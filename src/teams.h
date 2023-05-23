@@ -2,10 +2,19 @@
 #	define __TEAMS_H__
 #	include <stdint.h>
 #	include <stdbool.h>
-#	define   GETTER(type, field, ...) type team_get_##field(TEAM team, ## __VA_ARGS__)
-#	define   SETTER(type, field, ...) bool team_set_##field(TEAM team, ## __VA_ARGS__, type field)
-#	define team_get(team, field, ...) team_get_##field(team, ## __VA_ARGS__)
-#	define team_set(team, field, ...) team_set_##field(team, ## __VA_ARGS__)
+#	define GETTER(klass, field, struct, type, ...) \
+				type klass##_get_##field(struct self, ## __VA_ARGS__)
+#	define SETTER(klass, field, struct, type, ...) \
+				bool klass##_set_##field(struct self, ## __VA_ARGS__, type value)
+#	define DEFINE(klass, name, struct, type, ...) \
+				type klass##_##name(struct self, ## __VA_ARGS__)
+#	define UNUSED(arg) while(0 && (arg))
+#	define get(klass, instance, field, ...) \
+				klass##_get_##field(instance, ## __VA_ARGS__)
+#	define set(klass, instance, field, ...) \
+				klass##_set_##field(instance, ## __VA_ARGS__)
+#	define new(klass, ...) klass##_new(__VA_ARGS__)
+#	define fun(klass, fun, ...) klass##_##fun(__VA_ARGS__)
 // Type definition
 typedef struct team_impl_struct * TEAM;
 
@@ -14,24 +23,26 @@ TEAM team_new();
 void team_del(TEAM team);
 
 // field getters
-SETTER(char *, name);
-SETTER(char *, institution);
-SETTER(char *, member_name, int);
-SETTER(uint8_t, solved);
+SETTER(team, name,			TEAM, char *);
+SETTER(team, institution,	TEAM, char *);
+SETTER(team, member_name,	TEAM, char *, int);
+SETTER(team, solved,		TEAM, uint8_t);
 
 // field setters
-GETTER(char *, name);
-GETTER(char *, member_name, int);
-GETTER(char *, institution);
-GETTER(uint8_t, solved);
+GETTER(team, name,			TEAM, char *);
+GETTER(team, institution,	TEAM, char *);
+GETTER(team, member_name,	TEAM, char *, int);
+GETTER(team, solved,		TEAM, uint8_t);
 
 // helper functions
-int		team_printf(TEAM);
-int		team_fprintf(FILE *, TEAM);
-TEAM	team_find_champion(TEAM teams[], unsigned num);
+DEFINE(team, printf,  		TEAM,  int);
+DEFINE(team, fprintf, 		TEAM,  int, FILE *);
+DEFINE(team, find_champion, TEAM, TEAM, TEAM *, unsigned num);
 
 #	ifndef __IMPL_TEAMS_INTERNAL
 #		undef GETTER
 #		undef SETTER
+#		undef DEFINE
+#		undef UNUSED
 #	endif
 #endif /* __TEAMS_H__ */
