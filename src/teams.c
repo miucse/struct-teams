@@ -14,32 +14,32 @@ typedef struct team_impl_struct {
 } TEAM_impl;
 
 // base functions
-NEW(team, TEAM, {
+NEW(team, {
 	return (TEAM_impl *)malloc(sizeof(TEAM_impl));
 })
 
-DEL(team, TEAM, {
+DEL(team, {
 	if(self) free(self);
 })
 
 // Setter definitions
 // @set char[]: TEAM.name -> bool
-SETTER(team, name,			TEAM, char *, {
+SETTER(team, name,			char *, {
 	return !(strncpy(self->name, value, 255) == NULL);
 })
 
 // @set char[]: TEAM.institution -> bool
-SETTER(team, institution,	TEAM, char *, {
+SETTER(team, institution,	char *, {
 	return !(strncpy(self->institution, value, 255) == NULL);
 })
 
 // @set char[]: TEAM.member_name, int: id -> bool
-SETTER(team, member_name,	TEAM, char *, {
+SETTER(team, member_name,	char *, {
 	return (id > 0 && id < 4 && !(strncpy(self->members[id-1], value, 255) == NULL));
 }, int id)
 
 // @set int: TEAM.solved -> bool
-SETTER(team, solved,		TEAM, uint8_t, {
+SETTER(team, solved,		uint8_t, {
 	if (value <= 10)
 		self->solved = value;
 	return (value <= 10);
@@ -47,30 +47,30 @@ SETTER(team, solved,		TEAM, uint8_t, {
 
 // Getter definitions
 // @get TEAM.name -> char[]
-GETTER(team, name,			TEAM, char *, {
+GETTER(team, name,			char *, {
 	return self->name;
 })
 
 // @get TEAM.institution -> char[]
-GETTER(team, institution,	TEAM, char *, {
+GETTER(team, institution,	char *, {
 	return self->institution;
 })
 
 // @get TEAM.solved -> int
-GETTER(team, solved,		TEAM, uint8_t, {
+GETTER(team, solved,		uint8_t, {
 	return self->solved;
 })
 
 // @get TEAM.member_name, id -> char[]
-GETTER(team, member_name,	TEAM, char *, {
+GETTER(team, member_name,	char *, {
 	return (id > 0 && id < 4)? self->members[id - 1] : "(incorrect id)";
 }, int id)
 
-DEFINE(team, printf, TEAM, int, {
-	return fun(team, fprintf, self, stdout);
+DEFINE(team, printf, int, {
+	return ask(team, fprintf, self, stdout);
 })
 
-DEFINE(team, fprintf, TEAM, int, {
+DEFINE(team, fprintf, int, {
 	return fprintf(file,
 	               "Team name  : %s\n"
 	               "Institution: %s\n"
@@ -86,12 +86,12 @@ DEFINE(team, fprintf, TEAM, int, {
 	               self->members[2]);
 }, FILE *file)
 
-DEFINE(team, find_champion, TEAM, TEAM, {
+DEFINE(team, find_champion, team, {
 	UNUSED(self);
 
-	TEAM champion = teams[num - 1];
+	team champion = teams[num - 1];
 	while(num --)
 		if ( teams[num]->solved > champion->solved )
 			champion = teams[num];
 	return champion;
-}, TEAM *teams, unsigned num)
+}, team *teams, unsigned num)

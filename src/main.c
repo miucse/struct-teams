@@ -12,12 +12,12 @@ int main()
 {
 	unsigned num = 0, i = 0;
 	char line[255] = "";
-	TEAM *teams;
+	team *teams;
 
 	getline(line, 255);
 	sscanf(line, "%u", &num);
 	strncpy(line, "", 255);
-	teams = (TEAM *)malloc(sizeof(TEAM) * num);
+	teams = (team *)malloc(sizeof(team) * num);
 
 	if (teams == NULL) {
 		printf("Failed to reserve memory");
@@ -52,6 +52,9 @@ int main()
 		}
 	}
 
-	fun(team, printf, fun(team, find_champion, NULL, teams, num));
+	team champion = ask(team, find_champion, NULL, teams, num);
+	ask(team, printf, champion);
+
+	while(num --) del(team, teams[num]);
 	return 0;
 }
