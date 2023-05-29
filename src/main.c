@@ -56,5 +56,6 @@ int main()
 	ask(team, printf, champion);
 
 	while(num --) del(team, teams[num]);
+	free(teams);
 	return 0;
 }
