@@ -69,6 +69,8 @@ obj/%.o: src/%.c
 tests/+results/%.txt: tests/cases/%.txt obj/$(BINARY)
 	$(<<) "$(<<bold>>)TEST\t" $(<:tests/cases/%.txt=case-%)"$(<<stop>>)"
 	@mkdir -p tests/+results
+	# $(<<bold>>)============ input  =============$(<<stop>>)
+	@cat $(<)
 	# $(<<bold>>)============ output =============$(<<stop>>)
 	@obj/$(BINARY) < $(<) | tee $(@)
 	# $(<<bold>>)=========== expected ============$(<<stop>>)
