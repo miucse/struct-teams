@@ -1,9 +1,8 @@
 #ifndef __TEAMS_H__
 #	define __TEAMS_H__
-#	define __TEAMS_PRIVATE_H__
 #	include <stdint.h>
 #	include <stdbool.h>
-#	include "teams-hell.h"
+#	include "cobj.h"
 // Type definition
 typedef struct team_impl_struct * team;
 
@@ -26,8 +25,7 @@ GETTER(team, solved,		uint8_t);
 // helper functions
 DEFINE(team, printf,  		int);
 DEFINE(team, fprintf, 		int, FILE *);
-DEFINE(team, find_champion, team, team *, unsigned num);
+DEFINE(team, find_champion, team, team *, unsigned);
 
-#	define __TEAMS_PRIVATE_UNDEF__
-#	include "teams-hell.h"
+#	include "cobj.h"
 #endif /* __TEAMS_H__ */

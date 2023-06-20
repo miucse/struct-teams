@@ -3,8 +3,8 @@
 #include <string.h>
 
 #include "teams.h"
-#define __IMPL_TEAMS_INTERNAL
-#include "teams-hell.h"
+#define __COBJ_PRIV_IMPLS_H__
+#include "cobj.h"
 
 typedef struct team_impl_struct {
 	char name[255];
